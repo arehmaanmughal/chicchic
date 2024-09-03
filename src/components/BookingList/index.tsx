@@ -1,4 +1,9 @@
 import { useEffect, useState } from "react";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import PersonIcon from "@mui/icons-material/Person";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import sampleBookings from "@/data/bookinglist";
+import { CalendarMonth } from "@mui/icons-material";
 
 interface Booking {
   time: string;
@@ -15,103 +20,74 @@ interface BookingListProps {
 const BookingList: React.FC<BookingListProps> = ({ selectedDate }) => {
   const [bookings, setBookings] = useState<Booking[]>([]);
 
-  const sampleBookings = [
-    { time: "10:00 AM", client: "John Doe", date: "2024-09-01", location: "Room 101", status: "Confirmed" },
-    { time: "11:30 AM", client: "Jane Smith", date: "2024-09-01", location: "Room 102", status: "Pending" },
-    { time: "1:00 PM", client: "Alice Johnson", date: "2024-09-02", location: "Room 103", status: "Confirmed" },
-    { time: "3:30 PM", client: "Bob Brown", date: "2024-09-03", location: "Room 104", status: "Cancelled" },
-    { time: "9:00 AM", client: "Emily Davis", date: "2024-09-01", location: "Room 105", status: "Confirmed" },
-    { time: "2:00 PM", client: "Michael Wilson", date: "2024-09-02", location: "Room 106", status: "Pending" },
-    { time: "4:00 PM", client: "Sarah Lee", date: "2024-09-01", location: "Room 107", status: "Confirmed" },
-    { time: "5:00 PM", client: "David Taylor", date: "2024-09-03", location: "Room 108", status: "Pending" },
-    { time: "7:00 PM", client: "Jessica Martinez", date: "2024-09-04", location: "Room 109", status: "Confirmed" },
-    { time: "8:30 AM", client: "Daniel Garcia", date: "2024-09-02", location: "Room 110", status: "Confirmed" },
-    { time: "12:00 PM", client: "Olivia Hernandez", date: "2024-09-01", location: "Room 111", status: "Pending" },
-  ];
-
   useEffect(() => {
+    // Simulate fetching from storage
     localStorage.setItem("bookings", JSON.stringify(sampleBookings));
-    const storedBookings = JSON.parse(localStorage.getItem("bookings") || "[]") as Booking[];
+    const storedBookings = JSON.parse(
+      localStorage.getItem("bookings") || "[]"
+    ) as Booking[];
     setBookings(storedBookings);
   }, []);
 
-  const selectedDateString = selectedDate.toISOString().split("T")[0];
-  const pastBookings = bookings.filter(
-    (booking) => selectedDate.getFullYear() === 1900 || new Date(booking.date) < selectedDate
-  );
-  const futureBookings = bookings.filter(
-    (booking) => selectedDate.getFullYear() === 1900 || new Date(booking.date) >= selectedDate
+  // Convert selectedDate to a local date string for accurate comparison
+  const selectedDateString = selectedDate.toLocaleDateString("en-CA"); // Format as 'YYYY-MM-DD'
+
+  // Filter bookings based on the selected date
+  const selectedDateBookings = bookings.filter(
+    (booking) => booking.date === selectedDateString
   );
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-red-400 text-center mb-4">
-        Bookings {selectedDate.getFullYear() === 1900 ? "for All Dates" : `on ${selectedDateString}`}
-      </h2>
+    <div>
+      <div className="p-6 bg-white rounded-3xl shadow-md border border-gray">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {selectedDateBookings.length === 0 ? (
+            <p className="text-center text-black p-4">
+              No bookings for this date.
+            </p>
+          ) : (
+            selectedDateBookings.map((booking, index) => (
+              <div
+                key={index}
+                className="bg-white border border-gray rounded-lg shadow p-4 hover:bg-body transition duration-200 flex flex-col gap-2"
+              >
+                <div className="flex justify-between gap-2 items-center flex-wrap">
+                  <p className="text-black text-xl font-bold">
+                    {booking.client}
+                  </p>
+                  <p
+                    className={`py-1 px-2 w-fit rounded-md ${
+                      booking.status === "Pending"
+                        ? "bg-yellow text-black"
+                        : booking.status === "Cancelled"
+                        ? "bg-red text-white"
+                        : "bg-green text-white"
+                    }`}
+                  >
+                    {booking.status}
+                  </p>
+                </div>
 
-      {/* Future Bookings Section */}
-      <div className="mb-6">
-        <h3 className="text-xl font-semibold text-red-400 mb-2">Future Bookings</h3>
-        <div className="overflow-x-auto">
-          <div className="bg-white rounded-lg shadow w-full">
-            {futureBookings.length === 0 ? (
-              <p className="text-center text-red-400 p-4">No future bookings.</p>
-            ) : (
-              <table className="w-full bg-white">
-                <thead className="bg-slate-100">
-                  <tr>
-                    <th className="py-2 px-4 border-b border-gray-200">Time</th>
-                    <th className="py-2 px-4 border-b border-gray-200">Client</th>
-                    <th className="py-2 px-4 border-b border-gray-200">Location</th>
-                    <th className="py-2 px-4 border-b border-gray-200">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {futureBookings.map((booking, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="py-2 px-4 border-b border-gray-200">{booking.time}</td>
-                      <td className="py-2 px-4 border-b border-gray-200">{booking.client}</td>
-                      <td className="py-2 px-4 border-b border-gray-200">{booking.location}</td>
-                      <td className="py-2 px-4 border-b border-gray-200">{booking.status}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>
-        </div>
-      </div>
+                <div className="flex justify-between gap-2 items-center flex-wrap">
+                  <div className="flex items-center gap-2">
+                    <AccessTimeIcon className=" text-primary" />
+                    <p className="text-black text-wrap">
+                      {booking.time}
+                    </p>
+                  </div>
 
-      {/* Past Bookings Section */}
-      <div>
-        <h3 className="text-xl font-semibold text-red-600 mb-2">Past Bookings</h3>
-        <div className="overflow-x-auto">
-          <div className="bg-white rounded-lg shadow w-full">
-            {pastBookings.length === 0 ? (
-              <p className="text-center text-gray-500 p-4">No past bookings.</p>
-            ) : (
-              <table className="w-full bg-white">
-                <thead className="bg-slate-100">
-                  <tr>
-                    <th className="py-2 px-4 border-b border-gray-200">Time</th>
-                    <th className="py-2 px-4 border-b border-gray-200">Client</th>
-                    <th className="py-2 px-4 border-b border-gray-200">Location</th>
-                    <th className="py-2 px-4 border-b border-gray-200">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pastBookings.map((booking, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="py-2 px-4 border-b border-gray-200">{booking.time}</td>
-                      <td className="py-2 px-4 border-b border-gray-200">{booking.client}</td>
-                      <td className="py-2 px-4 border-b border-gray-200">{booking.location}</td>
-                      <td className="py-2 px-4 border-b border-gray-200">{booking.status}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>
+                  <div className="flex items-center gap-2">
+                    <LocationOnIcon className=" text-primary" />
+                    <p className="text-black">{booking.location}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CalendarMonth className=" text-primary" />
+                  <p className="text-black">{booking.date}</p>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

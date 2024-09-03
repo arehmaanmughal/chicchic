@@ -1,3 +1,4 @@
+import { Close } from "@mui/icons-material";
 import React, { ReactNode } from "react";
 
 interface ModalProps {
@@ -7,13 +8,13 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ onClose, children }) => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-100">
       <div className="bg-white rounded-lg shadow-lg p-4">
         <button
           onClick={onClose}
-          className="text-red-500 hover:text-red-700 float-right"
+          className="text-black float-right mb-2"
         >
-          X
+          <Close/>
         </button>
         {children}
       </div>

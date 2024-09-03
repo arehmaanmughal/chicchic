@@ -20,11 +20,17 @@ import AssessmentIcon from "@mui/icons-material/Assessment";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HelpIcon from "@mui/icons-material/Help";
 import FeedbackIcon from "@mui/icons-material/Feedback";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import PeopleIcon from "@mui/icons-material/People";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import MessageIcon from "@mui/icons-material/Message";
 import profile from "../../../public/images/profile.jpg";
 import logo from "../../../public/images/logo.png";
 import Image from "next/image";
-import Link from "next/link";
-import { Avatar, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Menu, ThemeProvider, Tooltip } from "@mui/material";
+import theme from "@/theme";
+import { useRouter } from "next/navigation";
+import { AccountCircle, LogoutOutlined } from "@mui/icons-material";
 
 const drawerWidth = 240;
 
@@ -45,7 +51,7 @@ export default function LeftDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-
+  const router = useRouter();
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
@@ -92,54 +98,86 @@ export default function LeftDrawer(props: Props) {
       path: "/feedback",
       icon: <FeedbackIcon />,
     },
+    {
+      title: "Notifications",
+      path: "/notifications",
+      icon: <NotificationsIcon />,
+    },
+    {
+      title: "Users",
+      path: "/users",
+      icon: <PeopleIcon />,
+    },
+    {
+      title: "Analytics",
+      path: "/analytics",
+      icon: <BarChartIcon />,
+    },
+    {
+      title: "Messages",
+      path: "/messages",
+      icon: <MessageIcon />,
+    },
   ];
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
+
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-  const settings = ["Profile", "Account", "Dashboard", "Logout"];
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
+  const settings = [
+    {
+      title: "Account",
+      path: "/account",
+      icon: <AccountCircle />,
+    },
+    {
+      title: "Logout",
+      path: "/signin",
+      icon: <LogoutOutlined />,
+    },
+  ];
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
   const drawerContent = (
-    <div>
-      <ProfileHeader className="bg-slate-100">
+    <div className="">
+      <ProfileHeader>
         <Image
           src={logo}
           alt="logo"
-          width={100}
-          height={100}
-          className="w-[100px] h-[100px]"
+          width={80}
+          height={80}
+          className=""
         />
       </ProfileHeader>
       <Divider />
       <List>
         {menus.map((menu) => (
           <ListItem key={menu.path} disablePadding>
-            <Link href={menu.path} className="w-full">
-              <ListItemButton className="hover:bg-blue-100">
-                <ListItemIcon className="text-gray-700">
-                  {menu.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={menu.title}
-                  className="text-gray-700 text-md font-bold"
-                />
-              </ListItemButton>
-            </Link>
+            <ListItemButton
+              sx={{
+                color: "primary.dark",
+                "&:hover": {
+                  backgroundColor: "secondary.main",
+                  color: "primary.main",
+                },
+              }}
+              onClick={() => router.push(menu.path)}
+            >
+              <ListItemIcon
+                sx={{
+                  color: "inherit",
+                }}
+              >
+                {menu.icon}
+              </ListItemIcon>
+              <ListItemText primary={menu.title} />
+            </ListItemButton>
           </ListItem>
         ))}
       </List>
@@ -150,56 +188,37 @@ export default function LeftDrawer(props: Props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className="bg-red-400"
-        sx={{
-          width: { md: `calc(100% - ${drawerWidth}px)` },
-          ml: { md: `${drawerWidth}px` },
-        }}
-      >
-        <Toolbar>
-          <div className="w-full flex justify-between items-center">
-            <div>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ display: { md: "none" } }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                className="text-white"
-              >
-                Salon Scheduler
-              </Typography>
-            </div>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <div className="flex items-center gap-3">
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Image
-                      src={profile}
-                      alt="User Picture"
-                      width={40}
-                      height={40}
-                      className="w-[40px] h-[40px] rounded-full"
-                    />
-                  </IconButton>
-                </Tooltip>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          sx={{
+            width: { md: `calc(100% - 275px)` },
+            m:{ md:"20px"},
+            ml: { sm: `${drawerWidth}px` },
+            borderRadius : {md : "8px"}
+          }}
+        >
+          <Toolbar>
+            <div className="w-full flex justify-between items-center">
+              <div className="flex items-center">
+                <IconButton
+                  aria-label="open drawer"
+                  edge="start"
+                  onClick={handleDrawerToggle}
+                  sx={{
+                    display: { md: "none" },
+                    color: "white",
+                  }}
+                >
+                  <MenuIcon />
+                </IconButton>
                 <div className="flex flex-col">
                   <Typography
                     noWrap
                     component="h6"
-                    className="text-white text-md font-bold"
+                    className="text-white text-md sm:text-xl font-bold"
                   >
                     Abdul Rehman
                   </Typography>
@@ -208,75 +227,113 @@ export default function LeftDrawer(props: Props) {
                     component="p"
                     className="text-white text-xs"
                   >
-                    Salon Scheduler
+                    Salon Manager
                   </Typography>
                 </div>
               </div>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography sx={{ textAlign: "center" }}>
-                      {setting}
-                    </Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </div>
-        </Toolbar>
-      </AppBar>
-      <Box
-        component="nav"
-        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-        aria-label="mailbox folders"
-      >
-        <Drawer
-          container={container}
-          open={mobileOpen}
-          onTransitionEnd={handleDrawerTransitionEnd}
-          onClose={handleDrawerClose}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            display: { xs: "block", md: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
+
+              <Box sx={{ flexGrow: 0 }}>
+                <div className="flex items-center gap-3">
+                  <Tooltip title="profile">
+                    <button
+                      onClick={handleOpenUserMenu}
+                      className="flex items-center gap-2"
+                    >
+                      <Image
+                        src={profile}
+                        alt="User Picture"
+                        width={40}
+                        height={40}
+                        className="w-8 h-8 sm:w-10 sm:h-10 rounded-full"
+                      />
+                    </button>
+                  </Tooltip>
+                </div>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <ListItem key={setting.path} disablePadding>
+                      <ListItemButton
+                        sx={{
+                          color: "primary.dark",                  
+                          "&:hover": {
+                            backgroundColor: "secondary.main",
+                            color: "primary.main",
+                          },
+                        }}
+                        onClick={() => router.push(setting.path)}
+                      >
+                        <ListItemIcon
+                          sx={{
+                            color: "inherit",
+                          }}
+                        >
+                          {setting.icon}
+                        </ListItemIcon>
+                        <ListItemText primary={setting.title} />
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                </Menu>
+              </Box>
+            </div>
+          </Toolbar>
+        </AppBar>
+        <Box
+          component="nav"
+          sx={{ width: { md: drawerWidth },  flexShrink: { md: 0 } }}
+          aria-label="mailbox folders"
+          
         >
-          {drawerContent}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: "none", md: "block" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-          open
-        >
-          {drawerContent}
-        </Drawer>
+          <Drawer
+            container={container}
+            open={mobileOpen}
+            onTransitionEnd={handleDrawerTransitionEnd}
+            onClose={handleDrawerClose}
+            ModalProps={{
+              keepMounted: true,
+            }}
+            sx={{
+              display: { xs: "block", md: "none" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+              },
+              backgroundColor: "primary.main",
+            }}
+          >
+            {drawerContent}
+          </Drawer>
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: "none", md: "block" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+              },
+              
+            }}
+            open
+          >
+            {drawerContent}
+          </Drawer>
+        </Box>
       </Box>
-    </Box>
+    </ThemeProvider>
   );
 }

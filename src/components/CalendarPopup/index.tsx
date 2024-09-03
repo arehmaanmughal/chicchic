@@ -1,29 +1,28 @@
 "use client";
-import { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React from 'react';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
 
 interface CalendarPopupProps {
-  onSelectDate: (date: Date | null) => void; // Accepts a Date or null
+  onSelectDate: (date: Date | null) => void;
 }
 
 const CalendarPopup: React.FC<CalendarPopupProps> = ({ onSelectDate }) => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(new Date());
 
-  const handleDateChange = (date: Date | null) => {
+  const handleDateChange = (date: Date | undefined) => {
     setSelectedDate(date);
-    onSelectDate(date);
+    onSelectDate(date || null); // Convert undefined back to null for the parent component if needed
   };
 
   return (
     <div className="py-4">
-      <DatePicker
+      <DayPicker
         selected={selectedDate}
-        onChange={handleDateChange}
-        inline
-        className="w-full"
-        dateFormat="MMMM d, yyyy" // Example of a custom date format
-        ariaLabelledBy="calendar-picker" // Accessibility enhancement
+        onSelect={handleDateChange}
+        mode="single"
+        className="w-full text-black"
+        aria-label="calendar-picker"
       />
       <label id="calendar-picker" className="sr-only">
         Select a date
