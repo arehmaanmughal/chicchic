@@ -34,15 +34,6 @@ import Searchbar from "../Searchbar";
 
 const drawerWidth = 240;
 
-const ProfileHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(2),
-  flexDirection: "column",
-  textAlign: "center",
-  background: theme.palette.background.default,
-}));
-
 const StaffList = styled("div")(({ theme }) => ({
   padding: theme.spacing(2),
 }));
@@ -57,7 +48,6 @@ const staffMembers = [
   { name: "Jane Doe", role: "Receptionist", image: profile },
   { name: "John Smith", role: "Hair Stylist", image: profile },
   { name: "Emily Johnson", role: "Nail Technician", image: profile },
-  
 ];
 
 interface Props {
@@ -67,18 +57,10 @@ interface Props {
 export default function LeftDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [isClosing, setIsClosing] = React.useState(false);
   const router = useRouter();
 
-  const handleDrawerClose = () => {
-    setIsClosing(true);
-    setMobileOpen(false);
-  };
-
   const handleDrawerToggle = () => {
-    if (!isClosing) {
-      setMobileOpen(!mobileOpen);
-    }
+    setMobileOpen(!mobileOpen);
   };
 
   const menus = [
@@ -99,12 +81,12 @@ export default function LeftDrawer(props: Props) {
       <div className="flex flex-col gap-2 items-center p-3">
         <Image src={profile} alt="profile" width={80} height={80} className="rounded-full" />
         <div className="flex flex-col items-center">
-        <Typography noWrap component="h6" className="text-black text-md sm:text-xl font-bold">
-          Mitchell Stark
-        </Typography>
-        <Typography noWrap component="p" className="text-black text-xs opacity-70">
-          Salon Manager
-        </Typography>
+          <Typography noWrap component="h6" className="text-black text-md sm:text-xl font-bold">
+            Mitchell Stark
+          </Typography>
+          <Typography noWrap component="p" className="text-black text-xs opacity-70">
+            Salon Manager
+          </Typography>
         </div>
       </div>
       <Divider />
@@ -173,18 +155,18 @@ export default function LeftDrawer(props: Props) {
           <Toolbar>
             <div className="w-full flex justify-between items-center">
               <div className="flex items-center">
-              <IconButton
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{
-                  display: { md: "none" },
-                  color: "white",
-                }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <h3 className="text-xl font-bold text-white">ChicChic</h3>
+                <IconButton
+                  aria-label="open drawer"
+                  edge="start"
+                  onClick={handleDrawerToggle}
+                  sx={{
+                    display: { md: "none" },
+                    color: "white",
+                  }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <h3 className="text-xl font-bold text-white">ChicChic</h3>
               </div>
               <div className="flex items-center">
                 <div className="hidden sm:block md:hidden lg:block">
@@ -203,7 +185,7 @@ export default function LeftDrawer(props: Props) {
           <Drawer
             container={container}
             open={mobileOpen}
-            onClose={handleDrawerClose}
+            onClose={handleDrawerToggle}
             ModalProps={{ keepMounted: true }}
             sx={{
               display: { xs: "block", md: "none" },
