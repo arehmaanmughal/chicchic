@@ -95,14 +95,8 @@ export default function LeftDrawer(props: Props) {
         {menus.map((menu) => (
           <ListItem key={menu.path} disablePadding>
             <ListItemButton
-              sx={{
-                color: "primary.dark",
-                "&:hover": {
-                  backgroundColor: "secondary.main",
-                  color: "primary.main",
-                },
-              }}
-              className={`${pathname===menu.path? "text-primary" : ""}`}
+             
+              className={`text-black hover:text-primary ${pathname===menu.path? "text-primary" : ""}`}
               onClick={() => router.push(menu.path)}
             >
               <ListItemIcon
