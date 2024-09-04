@@ -96,7 +96,11 @@ export default function LeftDrawer(props: Props) {
           <ListItem key={menu.path} disablePadding>
             <ListItemButton
               onClick={() => router.push(menu.path)}
-              sx={{ color: menu.path === "/" ? "primary.main" : "" }}
+              sx={{ color: menu.path === "/" ? "primary.main" : "primary.dark" ,
+                '&:hover': {
+                  color: theme.palette.primary.main,
+                },
+              }}
             >
               <ListItemIcon
                 sx={{
@@ -111,7 +115,7 @@ export default function LeftDrawer(props: Props) {
         ))}
       </List>
 
-      <div className="px-4 flex flex-col gap-3">
+      <div className="px-4 pb-3 flex flex-col gap-3">
         <h6 className="text-sm text-black">Staff Members</h6>
         {staffMembers.map((staff) => (
           <div className="flex items-center gap-3" key={staff.name}>
