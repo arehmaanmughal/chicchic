@@ -25,12 +25,12 @@ import PeopleIcon from "@mui/icons-material/People";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import MessageIcon from "@mui/icons-material/Message";
 import profile from "../../../public/images/profile.jpg";
-import logo from "../../../public/images/logo.png";
 import Image from "next/image";
-import { Menu, ThemeProvider, Tooltip } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import theme from "@/theme";
 import { useRouter } from "next/navigation";
-import { AccountCircle, LogoutOutlined } from "@mui/icons-material";
+import AccountMenu from "../AccountMenu";
+import Searchbar from "../Searchbar";
 
 const drawerWidth = 240;
 
@@ -43,6 +43,23 @@ const ProfileHeader = styled("div")(({ theme }) => ({
   background: theme.palette.background.default,
 }));
 
+const StaffList = styled("div")(({ theme }) => ({
+  padding: theme.spacing(2),
+}));
+
+const StaffMember = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  marginBottom: theme.spacing(1),
+}));
+
+const staffMembers = [
+  { name: "Jane Doe", role: "Receptionist", image: profile },
+  { name: "John Smith", role: "Hair Stylist", image: profile },
+  { name: "Emily Johnson", role: "Nail Technician", image: profile },
+  
+];
+
 interface Props {
   window?: () => Window;
 }
@@ -52,13 +69,10 @@ export default function LeftDrawer(props: Props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const router = useRouter();
+
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
-  };
-
-  const handleDrawerTransitionEnd = () => {
-    setIsClosing(false);
   };
 
   const handleDrawerToggle = () => {
@@ -68,87 +82,31 @@ export default function LeftDrawer(props: Props) {
   };
 
   const menus = [
-    {
-      title: "Dashboard",
-      path: "/dashboard",
-      icon: <DashboardIcon />,
-    },
-    {
-      title: "Appointments",
-      path: "/appointments",
-      icon: <CalendarTodayIcon />,
-    },
-    {
-      title: "Reports",
-      path: "/reports",
-      icon: <AssessmentIcon />,
-    },
-    {
-      title: "Settings",
-      path: "/settings",
-      icon: <SettingsIcon />,
-    },
-    {
-      title: "Help",
-      path: "/help",
-      icon: <HelpIcon />,
-    },
-    {
-      title: "Feedback",
-      path: "/feedback",
-      icon: <FeedbackIcon />,
-    },
-    {
-      title: "Notifications",
-      path: "/notifications",
-      icon: <NotificationsIcon />,
-    },
-    {
-      title: "Users",
-      path: "/users",
-      icon: <PeopleIcon />,
-    },
-    {
-      title: "Analytics",
-      path: "/analytics",
-      icon: <BarChartIcon />,
-    },
-    {
-      title: "Messages",
-      path: "/messages",
-      icon: <MessageIcon />,
-    },
+    { title: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
+    { title: "Appointments", path: "/appointments", icon: <CalendarTodayIcon /> },
+    { title: "Reports", path: "/reports", icon: <AssessmentIcon /> },
+    { title: "Settings", path: "/settings", icon: <SettingsIcon /> },
+    { title: "Help", path: "/help", icon: <HelpIcon /> },
+    { title: "Feedback", path: "/feedback", icon: <FeedbackIcon /> },
+    { title: "Notifications", path: "/notifications", icon: <NotificationsIcon /> },
+    { title: "Users", path: "/users", icon: <PeopleIcon /> },
+    { title: "Analytics", path: "/analytics", icon: <BarChartIcon /> },
+    { title: "Messages", path: "/messages", icon: <MessageIcon /> },
   ];
-
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
-  const settings = [
-    {
-      title: "Account",
-      path: "/account",
-      icon: <AccountCircle />,
-    },
-    {
-      title: "Logout",
-      path: "/signin",
-      icon: <LogoutOutlined />,
-    },
-  ];
-
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   const drawerContent = (
-    <div className="">
-      <ProfileHeader>
-        <Image src={logo} alt="logo" width={80} height={80} className="" />
-      </ProfileHeader>
+    <div>
+      <div className="flex flex-col gap-2 items-center p-3">
+        <Image src={profile} alt="profile" width={80} height={80} className="rounded-full" />
+        <div className="flex flex-col items-center">
+        <Typography noWrap component="h6" className="text-black text-md sm:text-xl font-bold">
+          Mitchell Stark
+        </Typography>
+        <Typography noWrap component="p" className="text-black text-xs opacity-70">
+          Salon Manager
+        </Typography>
+        </div>
+      </div>
       <Divider />
       <List>
         {menus.map((menu) => (
@@ -175,11 +133,29 @@ export default function LeftDrawer(props: Props) {
           </ListItem>
         ))}
       </List>
+      <Divider />
+      <StaffList>
+        <Typography variant="h6" component="h3" sx={{ mb: 2 }} className="text-xl text-black font-bold">
+          Staff Members
+        </Typography>
+        {staffMembers.map((staff) => (
+          <StaffMember key={staff.name}>
+            <Image src={staff.image} alt={staff.name} width={40} height={40} className="rounded-full" />
+            <Box sx={{ ml: 2 }}>
+              <Typography variant="body1" component="p" className="text-black font-semibold text-md">
+                {staff.name}
+              </Typography>
+              <Typography variant="body2" component="p" className="text-black text-sm">
+                {staff.role}
+              </Typography>
+            </Box>
+          </StaffMember>
+        ))}
+      </StaffList>
     </div>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
+  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <ThemeProvider theme={theme}>
@@ -189,122 +165,54 @@ export default function LeftDrawer(props: Props) {
           position="fixed"
           sx={{
             width: { md: `calc(100% - 275px)` },
-            m:{ md:"20px"},
+            m: { md: "20px" },
             ml: { sm: `${drawerWidth}px` },
-            borderRadius : {md : "8px"}
+            borderRadius: { md: "8px" },
           }}
         >
           <Toolbar>
             <div className="w-full flex justify-between items-center">
               <div className="flex items-center">
-                <IconButton
-                  aria-label="open drawer"
-                  edge="start"
-                  onClick={handleDrawerToggle}
-                  sx={{
-                    display: { md: "none" },
-                    color: "white",
-                  }}
-                >
-                  <MenuIcon />
-                </IconButton>
-                <div className="flex flex-col">
-                  <Typography
-                    noWrap
-                    component="h6"
-                    className="text-white text-md sm:text-xl font-bold"
-                  >
-                    Abdul Rehman
-                  </Typography>
-                  <Typography
-                    noWrap
-                    component="p"
-                    className="text-white text-xs"
-                  >
-                    Salon Manager
-                  </Typography>
-                </div>
+              <IconButton
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{
+                  display: { md: "none" },
+                  color: "white",
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <h3 className="text-xl font-bold text-white">ChicChic</h3>
               </div>
-
-              <Box sx={{ flexGrow: 0 }}>
-                <div className="flex items-center gap-3">
-                  <Tooltip title="profile">
-                    <button
-                      onClick={handleOpenUserMenu}
-                      className="flex items-center gap-2"
-                    >
-                      <Image
-                        src={profile}
-                        alt="User Picture"
-                        width={40}
-                        height={40}
-                        className="w-8 h-8 sm:w-10 sm:h-10 rounded-full"
-                      />
-                    </button>
-                  </Tooltip>
+              <div className="flex items-center">
+                <div className="hidden sm:block md:hidden lg:block">
+                  <Searchbar />
                 </div>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <ListItem key={setting.path} disablePadding>
-                      <ListItemButton
-                        sx={{
-                          color: "primary.dark",                  
-                          "&:hover": {
-                            backgroundColor: "secondary.main",
-                            color: "primary.main",
-                          },
-                        }}
-                        onClick={() => router.push(setting.path)}
-                      >
-                        <ListItemIcon
-                          sx={{
-                            color: "inherit",
-                          }}
-                        >
-                          {setting.icon}
-                        </ListItemIcon>
-                        <ListItemText primary={setting.title} />
-                      </ListItemButton>
-                    </ListItem>
-                  ))}
-                </Menu>
-              </Box>
+                <AccountMenu />
+              </div>
             </div>
           </Toolbar>
         </AppBar>
         <Box
           component="nav"
           sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
-          aria-label="mailbox folders"
+          aria-label="navigation menu"
         >
           <Drawer
             container={container}
             open={mobileOpen}
-            onTransitionEnd={handleDrawerTransitionEnd}
             onClose={handleDrawerClose}
-            ModalProps={{
-              keepMounted: true,
-            }}
+            ModalProps={{ keepMounted: true }}
             sx={{
               display: { xs: "block", md: "none" },
               "& .MuiDrawer-paper": {
                 boxSizing: "border-box",
                 width: drawerWidth,
+                overflow: "auto",
+                "&::-webkit-scrollbar": { display: "none" },
+                scrollbarWidth: "none",
               },
               backgroundColor: "primary.main",
             }}
@@ -318,6 +226,9 @@ export default function LeftDrawer(props: Props) {
               "& .MuiDrawer-paper": {
                 boxSizing: "border-box",
                 width: drawerWidth,
+                overflow: "auto",
+                "&::-webkit-scrollbar": { display: "none" },
+                scrollbarWidth: "none",
               },
             }}
             open

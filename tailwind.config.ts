@@ -10,10 +10,10 @@ const config: Config = {
   theme: {
     screens: {
       xs: '0px', // Smallest screen
-      sm: "480px", // Small screen
+      sm: "576px", // Small screen
       md: "768px", // Medium screen
-      lg: "1024px", // Large screen
-      xl: "1280px", // Extra large screen
+      lg: "992px", // Large screen
+      xl: "1200px", // Extra large screen
       xxl: "1400px", // Extra large screen
       xxxl: "2000px" // Extra large screen
     },

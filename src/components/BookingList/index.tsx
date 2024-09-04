@@ -4,6 +4,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import sampleBookings from "@/data/bookinglist";
 import { CalendarMonth, Phone } from "@mui/icons-material";
+import { Pagination } from "@mui/material";
 
 interface Booking {
   time: string;
@@ -41,7 +42,7 @@ const BookingList: React.FC<BookingListProps> = ({ selectedDate }) => {
 
   return (
     <div>
-      <div className="p-6 bg-white rounded-3xl shadow-md border border-gray">
+      <div className="p-3 sm:p-6 bg-white rounded-xl sm:rounded-3xl shadow-md border border-gray flex flex-col gap-5">
         <div className="grid grid-cols-1 lg:grid-cols-2 xxl:grid-cols-3 xxxl:grid-cols-4 gap-4">
           {selectedDateBookings.length === 0 ? (
             <p className="text-center text-black p-4">
@@ -58,7 +59,7 @@ const BookingList: React.FC<BookingListProps> = ({ selectedDate }) => {
                     {booking.client}
                   </p>
                   <p
-                    className={`py-1 px-2 w-fit rounded-md ${
+                    className={`py-1 px-2 w-fit text-xs rounded-md ${
                       booking.status === "Pending"
                         ? "bg-yellow text-black"
                         : booking.status === "Cancelled"
@@ -101,6 +102,9 @@ const BookingList: React.FC<BookingListProps> = ({ selectedDate }) => {
             ))
           )}
         </div>
+       <div className="flex justify-center">
+       <Pagination count={10} variant="outlined"/>
+       </div>
       </div>
     </div>
   );

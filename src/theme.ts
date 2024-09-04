@@ -6,10 +6,10 @@ const theme = createTheme({
   breakpoints: {
     values: {
       xs: 0, // Smallest screen
-      sm: 480, // Small screen
+      sm: 576, // Small screen
       md: 768, // Medium screen
-      lg: 1024, // Large screen
-      xl: 1280, // Extra large screen
+      lg: 992, // Large screen
+      xl: 1200, // Extra large screen
     },
   },
   palette: {

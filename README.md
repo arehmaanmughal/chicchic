@@ -20,17 +20,71 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+Project Structure
+The project is structured as follows:
 
-To learn more about Next.js, take a look at the following resources:
+.
+├── components         # Reusable components (e.g., Drawer, Calendar, BookingList)
+├── pages
+│   ├── _app.tsx       # Custom App component
+│   ├── index.tsx      # Main page
+├── public             # Static assets (images, icons, etc.)
+└── README.md          # Project documentation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Features
 
-## Deploy on Vercel
+Left Drawer Navigation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+A profile header featuring a picture and the user's occupation.
+A list of dummy navigation options.
+A list of staff members, including their names and occupations.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Implemented using a modern UI library (e.g., Material-UI).
+
+Calendar View
+A dropdown calendar displaying the current date by default.
+Users can select different dates from the calendar.
+Implemented using a date-picker library (e.g., react-datepicker, @mui/lab/DatePicker).
+
+Booking View
+Displays all past and future bookings based on the selected date.
+Booking data is stored locally using client-side storage (e.g., localStorage).
+The booking view can scroll vertically and horizontally.
+Technologies Used
+Next.js - The React framework used for building the application.
+TypeScript - Used for type safety and better code maintainability.
+Tailwind CSS - For modern and responsive styling.
+Material-UI - For building the UI components like the left drawer and other elements.
+localStorage - Used for storing booking data locally on the client-side.
+Usage
+Open the application in your browser.
+Use the left drawer to navigate between different sections.
+Select a date using the calendar popup.
+View the bookings for the selected date in the booking view.
+Development Process
+The development process was broken down into the following steps:
+
+Project Setup: 
+Initialized the Next.js project with TypeScript and set up the necessary dependencies.
+
+UI Design: 
+Implemented the left drawer navigation, calendar popup, and booking view based on the provided design specifications.
+
+Functionality Implementation: 
+Integrated localStorage for storing booking data and ensured smooth interactions and transitions.
+Testing and Debugging: Tested the application on different devices to ensure responsiveness and accessibility.
+
+Documentation: 
+Created a README file and a brief report describing the development process.
+Challenges Faced
+Responsive Design: 
+Ensuring the UI was responsive on both desktop and mobile devices required careful consideration of CSS layouts and media queries.
+
+Calendar Integration: 
+Implementing a smooth and user-friendly calendar popup that integrates well with the booking view was challenging.
+
+localStorage Management: 
+Managing booking data in localStorage while ensuring data integrity and performance was crucial.
+Future Improvements
+
