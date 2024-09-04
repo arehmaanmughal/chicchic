@@ -55,20 +55,12 @@ export default function LeftDrawer(props: Props) {
 
   const menus = [
     { title: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
-    {
-      title: "Appointments",
-      path: "/appointments",
-      icon: <CalendarTodayIcon />,
-    },
+    { title: "Appointments", path: "/appointments", icon: <CalendarTodayIcon /> },
     { title: "Reports", path: "/reports", icon: <AssessmentIcon /> },
     { title: "Settings", path: "/settings", icon: <SettingsIcon /> },
     { title: "Help", path: "/help", icon: <HelpIcon /> },
     { title: "Feedback", path: "/feedback", icon: <FeedbackIcon /> },
-    {
-      title: "Notifications",
-      path: "/notifications",
-      icon: <NotificationsIcon />,
-    },
+    { title: "Notifications", path: "/notifications", icon: <NotificationsIcon /> },
     { title: "Users", path: "/users", icon: <PeopleIcon /> },
     { title: "Analytics", path: "/analytics", icon: <BarChartIcon /> },
     { title: "Messages", path: "/messages", icon: <MessageIcon /> },
@@ -146,40 +138,54 @@ export default function LeftDrawer(props: Props) {
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar
-          position="fixed"
+        <Box
           sx={{
-            width: { md: `calc(100% - 275px)` },
-            m: { md: "20px" },
-            ml: { sm: `${drawerWidth}px` },
-            borderRadius: { md: "8px" },
+            display: "flex",
+            flexDirection: "column",
+            width: { md: `calc(100% - ${drawerWidth}px)` },
+            ml: { md: `${drawerWidth}px` },
+            backgroundColor: "secondary.main",  // Add background color to the parent Box
+            zIndex: 1, // Ensure it is on top
+            height: "100px",
+            position : "fixed"
           }}
         >
-          <Toolbar>
-            <div className="w-full flex justify-between items-center">
-              <div className="flex items-center">
-                <IconButton
-                  aria-label="open drawer"
-                  edge="start"
-                  onClick={handleDrawerToggle}
-                  sx={{
-                    display: { md: "none" },
-                    color: "white",
-                  }}
-                >
-                  <MenuIcon />
-                </IconButton>
-                <h3 className="text-xl font-bold text-white">ChicChic</h3>
-              </div>
-              <div className="flex items-center">
-                <div className="hidden sm:block md:hidden lg:block">
-                  <Searchbar />
+          <AppBar
+            position="fixed"
+            sx={{
+              width: { md: `calc(100% - ${drawerWidth + 35}px)` },
+              m: { md: "20px" },
+              ml: { sm: `${drawerWidth}px` },
+              borderRadius: { md: "8px" },
+              zIndex: 1201, // Set higher zIndex to ensure it's on top
+            }}
+          >
+            <Toolbar>
+              <div className="w-full flex justify-between items-center">
+                <div className="flex items-center">
+                  <IconButton
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={handleDrawerToggle}
+                    sx={{
+                      display: { md: "none" },
+                      color: "white",
+                    }}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <h3 className="text-xl font-bold text-white">ChicChic</h3>
                 </div>
-                <AccountMenu />
+                <div className="flex items-center">
+                  <div className="hidden sm:block md:hidden lg:block">
+                    <Searchbar />
+                  </div>
+                  <AccountMenu />
+                </div>
               </div>
-            </div>
-          </Toolbar>
-        </AppBar>
+            </Toolbar>
+          </AppBar>
+        </Box>
         <Box
           component="nav"
           sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
@@ -225,3 +231,4 @@ export default function LeftDrawer(props: Props) {
     </ThemeProvider>
   );
 }
+
