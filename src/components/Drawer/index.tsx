@@ -34,16 +34,6 @@ import Searchbar from "../Searchbar";
 
 const drawerWidth = 240;
 
-const StaffList = styled("div")(({ theme }) => ({
-  padding: theme.spacing(2),
-}));
-
-const StaffMember = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  marginBottom: theme.spacing(1),
-}));
-
 const staffMembers = [
   { name: "Jane Doe", role: "Receptionist", image: profile },
   { name: "John Smith", role: "Hair Stylist", image: profile },
@@ -65,12 +55,20 @@ export default function LeftDrawer(props: Props) {
 
   const menus = [
     { title: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
-    { title: "Appointments", path: "/appointments", icon: <CalendarTodayIcon /> },
+    {
+      title: "Appointments",
+      path: "/appointments",
+      icon: <CalendarTodayIcon />,
+    },
     { title: "Reports", path: "/reports", icon: <AssessmentIcon /> },
     { title: "Settings", path: "/settings", icon: <SettingsIcon /> },
     { title: "Help", path: "/help", icon: <HelpIcon /> },
     { title: "Feedback", path: "/feedback", icon: <FeedbackIcon /> },
-    { title: "Notifications", path: "/notifications", icon: <NotificationsIcon /> },
+    {
+      title: "Notifications",
+      path: "/notifications",
+      icon: <NotificationsIcon />,
+    },
     { title: "Users", path: "/users", icon: <PeopleIcon /> },
     { title: "Analytics", path: "/analytics", icon: <BarChartIcon /> },
     { title: "Messages", path: "/messages", icon: <MessageIcon /> },
@@ -79,14 +77,18 @@ export default function LeftDrawer(props: Props) {
   const drawerContent = (
     <div>
       <div className="flex flex-col gap-2 items-center p-3">
-        <Image src={profile} alt="profile" width={80} height={80} className="rounded-full" />
+        <Image
+          src={profile}
+          alt="profile"
+          width={80}
+          height={80}
+          className="rounded-full"
+        />
         <div className="flex flex-col items-center">
-          <Typography noWrap component="h6" className="text-black text-md sm:text-xl font-bold">
+          <h6 className="text-black text-md sm:text-xl font-bold">
             Mitchell Stark
-          </Typography>
-          <Typography noWrap component="p" className="text-black text-xs opacity-70">
-            Salon Manager
-          </Typography>
+          </h6>
+          <p className="text-black text-xs opacity-70">Salon Manager</p>
         </div>
       </div>
       <Divider />
@@ -116,28 +118,29 @@ export default function LeftDrawer(props: Props) {
         ))}
       </List>
       <Divider />
-      <StaffList>
-        <Typography variant="h6" component="h3" sx={{ mb: 2 }} className="text-xl text-black font-bold">
-          Staff Members
-        </Typography>
+      <div className="p-4 flex flex-col gap-3">
+        <h6 className="text-xl text-black font-bold">Staff Members</h6>
         {staffMembers.map((staff) => (
-          <StaffMember key={staff.name}>
-            <Image src={staff.image} alt={staff.name} width={40} height={40} className="rounded-full" />
-            <Box sx={{ ml: 2 }}>
-              <Typography variant="body1" component="p" className="text-black font-semibold text-md">
-                {staff.name}
-              </Typography>
-              <Typography variant="body2" component="p" className="text-black text-sm">
-                {staff.role}
-              </Typography>
-            </Box>
-          </StaffMember>
+          <div className="flex gap-3" key={staff.name}>
+            <Image
+              src={staff.image}
+              alt={staff.name}
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+            <div>
+              <p className="text-black font-semibold text-md">{staff.name}</p>
+              <p className="text-black text-sm">{staff.role}</p>
+            </div>
+          </div>
         ))}
-      </StaffList>
+      </div>
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <ThemeProvider theme={theme}>
