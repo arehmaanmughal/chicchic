@@ -147,13 +147,7 @@ export default function LeftDrawer(props: Props) {
   const drawerContent = (
     <div className="">
       <ProfileHeader>
-        <Image
-          src={logo}
-          alt="logo"
-          width={80}
-          height={80}
-          className=""
-        />
+        <Image src={logo} alt="logo" width={80} height={80} className="" />
       </ProfileHeader>
       <Divider />
       <List>
@@ -295,9 +289,8 @@ export default function LeftDrawer(props: Props) {
         </AppBar>
         <Box
           component="nav"
-          sx={{ width: { md: drawerWidth },  flexShrink: { md: 0 } }}
+          sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
           aria-label="mailbox folders"
-          
         >
           <Drawer
             container={container}
@@ -326,7 +319,6 @@ export default function LeftDrawer(props: Props) {
                 boxSizing: "border-box",
                 width: drawerWidth,
               },
-              
             }}
             open
           >

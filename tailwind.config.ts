@@ -14,6 +14,8 @@ const config: Config = {
       md: "768px", // Medium screen
       lg: "1024px", // Large screen
       xl: "1280px", // Extra large screen
+      xxl: "1400px", // Extra large screen
+      xxxl: "2000px" // Extra large screen
     },
     colors: {
       primary: "#fc6e6a", // Your primary color

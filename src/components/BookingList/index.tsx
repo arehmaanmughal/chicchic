@@ -3,7 +3,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PersonIcon from "@mui/icons-material/Person";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import sampleBookings from "@/data/bookinglist";
-import { CalendarMonth } from "@mui/icons-material";
+import { CalendarMonth, Phone } from "@mui/icons-material";
 
 interface Booking {
   time: string;
@@ -11,6 +11,8 @@ interface Booking {
   date: string;
   location: string;
   status: string;
+  number : string;
+  message : string;
 }
 
 interface BookingListProps {
@@ -40,7 +42,7 @@ const BookingList: React.FC<BookingListProps> = ({ selectedDate }) => {
   return (
     <div>
       <div className="p-6 bg-white rounded-3xl shadow-md border border-gray">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xxl:grid-cols-3 xxxl:grid-cols-4 gap-4">
           {selectedDateBookings.length === 0 ? (
             <p className="text-center text-black p-4">
               No bookings for this date.
@@ -81,9 +83,19 @@ const BookingList: React.FC<BookingListProps> = ({ selectedDate }) => {
                     <p className="text-black">{booking.location}</p>
                   </div>
                 </div>
+                <div className="flex justify-between gap-2 flex-wrap">
                 <div className="flex items-center gap-2">
                   <CalendarMonth className=" text-primary" />
                   <p className="text-black">{booking.date}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone className=" text-primary" />
+                  <p className="text-black">{booking.number}</p>
+                </div>
+                </div>
+                <div>
+                <h6 className="text-black font-bold">Message:</h6>
+                <p className="text-black">{booking.message}</p>
                 </div>
               </div>
             ))
