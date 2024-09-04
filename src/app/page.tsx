@@ -29,7 +29,7 @@ const SchedulerPage = () => {
   }, []);
 
   return (
-    <div className="">
+    <div>
       <LeftDrawer />
       <div className="px-3 py-3 sm:py-12 mt-14 sm:mt-16 md:ml-[240px] flex flex-col gap-8">
         <div className="hidden sm:flex justify-between">

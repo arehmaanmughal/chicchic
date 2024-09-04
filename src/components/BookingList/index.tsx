@@ -100,7 +100,15 @@ const BookingList: React.FC<BookingListProps> = ({ selectedDate }) => {
           )}
         </div>
         <div className="flex justify-center">
-          <Pagination count={10} variant="outlined" />
+          <Pagination
+            count={5}
+            variant="outlined"
+            sx={{
+              "& .MuiPaginationItem-root": {
+                margin: "8px", 
+              },
+            }}
+          />
         </div>
       </div>
     </div>
