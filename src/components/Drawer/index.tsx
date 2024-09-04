@@ -113,7 +113,7 @@ export default function LeftDrawer(props: Props) {
       <div className="p-4 flex flex-col gap-3">
         <h6 className="text-xl text-black font-bold">Staff Members</h6>
         {staffMembers.map((staff) => (
-          <div className="flex gap-3" key={staff.name}>
+          <div className="flex items-center gap-3" key={staff.name}>
             <Image
               src={staff.image}
               alt={staff.name}
