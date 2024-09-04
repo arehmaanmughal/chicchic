@@ -61,7 +61,7 @@ const BookingList: React.FC<BookingListProps> = ({ selectedDate }) => {
                   <p
                     className={`py-1 px-2 w-fit text-xs rounded-md ${
                       booking.status === "Pending"
-                        ? "bg-yellow text-black"
+                        ? "bg-orange text-white"
                         : booking.status === "Cancelled"
                         ? "bg-red text-white"
                         : "bg-green text-white"

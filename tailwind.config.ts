@@ -26,6 +26,7 @@ const config: Config = {
       green: "#4caf50", // Green for success
       red: "#f44336", // Red for errors or cancellations
       yellow: "#ffeb3b", // Yellow for warnings or pending states
+      orange : "#FF8C00"
     },
   },
 
