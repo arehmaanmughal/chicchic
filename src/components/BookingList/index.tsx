@@ -12,8 +12,8 @@ interface Booking {
   date: string;
   location: string;
   status: string;
-  number : string;
-  message : string;
+  number: string;
+  message: string;
 }
 
 interface BookingListProps {
@@ -74,37 +74,34 @@ const BookingList: React.FC<BookingListProps> = ({ selectedDate }) => {
                 <div className="flex justify-between gap-2 items-center flex-wrap">
                   <div className="flex items-center gap-2">
                     <AccessTimeIcon className=" text-primary" />
-                    <p className="text-black text-wrap">
-                      {booking.time}
-                    </p>
+                    <p className="text-black text-wrap">{booking.time}</p>
                   </div>
-
+                  <div className="flex items-center gap-2">
+                    <CalendarMonth className=" text-primary" />
+                    <p className="text-black">{booking.date}</p>
+                  </div>
+                </div>
+                <div className="flex justify-between gap-2 flex-wrap">
                   <div className="flex items-center gap-2">
                     <LocationOnIcon className=" text-primary" />
                     <p className="text-black">{booking.location}</p>
                   </div>
-                </div>
-                <div className="flex justify-between gap-2 flex-wrap">
-                <div className="flex items-center gap-2">
-                  <CalendarMonth className=" text-primary" />
-                  <p className="text-black">{booking.date}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Phone className=" text-primary" />
-                  <p className="text-black">{booking.number}</p>
-                </div>
+                  <div className="flex items-center gap-2">
+                    <Phone className=" text-primary" />
+                    <p className="text-black">{booking.number}</p>
+                  </div>
                 </div>
                 <div>
-                <h6 className="text-black font-bold">Message:</h6>
-                <p className="text-black">{booking.message}</p>
+                  <h6 className="text-black font-bold">Message:</h6>
+                  <p className="text-black">{booking.message}</p>
                 </div>
               </div>
             ))
           )}
         </div>
-       <div className="flex justify-center">
-       <Pagination count={10} variant="outlined"/>
-       </div>
+        <div className="flex justify-center">
+          <Pagination count={10} variant="outlined" />
+        </div>
       </div>
     </div>
   );

@@ -55,12 +55,20 @@ export default function LeftDrawer(props: Props) {
 
   const menus = [
     { title: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
-    { title: "Appointments", path: "/appointments", icon: <CalendarTodayIcon /> },
+    {
+      title: "Appointments",
+      path: "/appointments",
+      icon: <CalendarTodayIcon />,
+    },
     { title: "Reports", path: "/reports", icon: <AssessmentIcon /> },
     { title: "Settings", path: "/settings", icon: <SettingsIcon /> },
     { title: "Help", path: "/help", icon: <HelpIcon /> },
     { title: "Feedback", path: "/feedback", icon: <FeedbackIcon /> },
-    { title: "Notifications", path: "/notifications", icon: <NotificationsIcon /> },
+    {
+      title: "Notifications",
+      path: "/notifications",
+      icon: <NotificationsIcon />,
+    },
     { title: "Users", path: "/users", icon: <PeopleIcon /> },
     { title: "Analytics", path: "/analytics", icon: <BarChartIcon /> },
     { title: "Messages", path: "/messages", icon: <MessageIcon /> },
@@ -80,7 +88,7 @@ export default function LeftDrawer(props: Props) {
           <h6 className="text-black text-md sm:text-xl font-bold">
             Mitchell Stark
           </h6>
-          <p className="text-black text-xs opacity-70">Salon Manager</p>
+          <p className="text-black text-xs">Salon Manager</p>
         </div>
       </div>
       <Divider />
@@ -109,9 +117,9 @@ export default function LeftDrawer(props: Props) {
           </ListItem>
         ))}
       </List>
-      <Divider />
-      <div className="p-4 flex flex-col gap-3">
-        <h6 className="text-xl text-black font-bold">Staff Members</h6>
+
+      <div className="px-4 flex flex-col gap-3">
+        <h6 className="text-sm text-black">Staff Members</h6>
         {staffMembers.map((staff) => (
           <div className="flex items-center gap-3" key={staff.name}>
             <Image
@@ -144,10 +152,10 @@ export default function LeftDrawer(props: Props) {
             flexDirection: "column",
             width: { md: `calc(100% - ${drawerWidth}px)` },
             ml: { md: `${drawerWidth}px` },
-            backgroundColor: "secondary.main",  // Add background color to the parent Box
+            backgroundColor: "secondary.main", // Add background color to the parent Box
             zIndex: 1, // Ensure it is on top
             height: "100px",
-            position : "fixed"
+            position: "fixed",
           }}
         >
           <AppBar
@@ -231,4 +239,3 @@ export default function LeftDrawer(props: Props) {
     </ThemeProvider>
   );
 }
-
