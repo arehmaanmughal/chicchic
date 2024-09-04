@@ -12,8 +12,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AssessmentIcon from "@mui/icons-material/Assessment";
@@ -25,19 +23,20 @@ import PeopleIcon from "@mui/icons-material/People";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import MessageIcon from "@mui/icons-material/Message";
 import profile from "../../../public/images/profile.jpg";
+import profile2 from "../../../public/images/profile2.jpg";
 import Image from "next/image";
 import { ThemeProvider } from "@mui/material";
 import theme from "@/theme";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import AccountMenu from "../AccountMenu";
 import Searchbar from "../Searchbar";
 
 const drawerWidth = 240;
 
 const staffMembers = [
-  { name: "Jane Doe", role: "Receptionist", image: profile },
+  { name: "Jane Doe", role: "Receptionist", image: profile2 },
   { name: "John Smith", role: "Hair Stylist", image: profile },
-  { name: "Emily Johnson", role: "Nail Technician", image: profile },
+  { name: "Emily Johnson", role: "Nail Technician", image: profile2 },
 ];
 
 interface Props {
@@ -48,13 +47,13 @@ export default function LeftDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const router = useRouter();
-
+  const pathname = usePathname();
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const menus = [
-    { title: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
+    { title: "Dashboard", path: "/", icon: <DashboardIcon /> },
     {
       title: "Appointments",
       path: "/appointments",
@@ -82,7 +81,7 @@ export default function LeftDrawer(props: Props) {
           alt="profile"
           width={80}
           height={80}
-          className="rounded-full"
+          className="h-20 w-20 rounded-full"
         />
         <div className="flex flex-col items-center">
           <h6 className="text-black text-md sm:text-xl font-bold">
@@ -103,6 +102,7 @@ export default function LeftDrawer(props: Props) {
                   color: "primary.main",
                 },
               }}
+              className={`${pathname===menu.path? "text-primary" : ""}`}
               onClick={() => router.push(menu.path)}
             >
               <ListItemIcon
@@ -127,7 +127,7 @@ export default function LeftDrawer(props: Props) {
               alt={staff.name}
               width={40}
               height={40}
-              className="rounded-full"
+              className="h-10 w-10 rounded-full"
             />
             <div>
               <p className="text-black font-semibold text-md">{staff.name}</p>

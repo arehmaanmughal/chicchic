@@ -6,6 +6,7 @@ import BookingList from "@/components/BookingList";
 import Modal from "@/components/Modal";
 import { FilterList, Search } from "@mui/icons-material";
 import Searchbar from "@/components/Searchbar";
+import BasicBreadcrumbs from "@/components/Breadcrumbs";
 
 const SchedulerPage = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -30,16 +31,20 @@ const SchedulerPage = () => {
   return (
     <div className="">
       <LeftDrawer />
-      <div className="px-3 py-3 sm:py-10 mt-14 sm:mt-16 md:ml-[240px] flex flex-col gap-3">
-        <h2 className="text-xl sm:text-2xl font-bold text-black">
-          Booking List
-        </h2>
+      <div className="px-3 py-3 sm:py-12 mt-14 sm:mt-16 md:ml-[240px] flex flex-col gap-8">
+        <div className="hidden sm:flex justify-between">
+          <h2 className="text-xl sm:text-2xl font-bold text-black">
+            Booking List
+          </h2>
+          <BasicBreadcrumbs />
+        </div>
+        <div className="flex flex-col gap-3">
         <div className="flex items-center flex-wrap justify-end">
           <div className="hidden sm:block">
-          <Searchbar/>
+            <Searchbar />
           </div>
           <div className="block sm:hidden">
-            <Search/>
+            <Search />
           </div>
           <button
             onClick={handleOpenModal}
@@ -53,6 +58,7 @@ const SchedulerPage = () => {
 
         <BookingList selectedDate={selectedDate} />
 
+        </div>
         {isModalOpen && (
           <Modal onClose={handleCloseModal}>
             <CalendarPopup onSelectDate={handleDateSelect} />
